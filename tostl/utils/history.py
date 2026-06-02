@@ -2,11 +2,11 @@ import json
 import os
 from typing import Any, Dict, List
 
-from app.config import HISTORY_FILE, TODAY
-from app.utils.colors import color_text
-from app.utils.helpers import get_date_from_timestamp, pretty_print
-from app.utils.locale import t
-from app.utils.params import DETAILS_MODE, SHARE_MODE, ALL_KEYS_MODE
+from tostl.config import HISTORY_FILE, TODAY
+from tostl.utils.colors import color_text
+from tostl.utils.helpers import get_date_from_timestamp, pretty_print
+from tostl.utils.locale import t
+from tostl.utils.params import DETAILS_MODE, ALL_KEYS_MODE
 
 
 # uninteresting history entries
@@ -163,12 +163,6 @@ def get_history_of_order(order_reference) -> List[Dict[str, Any]]:
                     display_key = HISTORY_TRANSLATIONS_DETAILS[key_str]
                 else:
                     continue
-
-                if SHARE_MODE and key_str in HISTORY_TRANSLATIONS_ANONYMOUS:
-                    change = dict(change)
-                    for field in ['value', 'old_value']:
-                        if isinstance(change.get(field), str):
-                            change[field] = None
 
             sanitized_change = {
                 'operation': change.get('operation'),

@@ -1,4 +1,3 @@
-import io
 import json
 import os
 import re
@@ -7,13 +6,7 @@ import uuid
 from collections import OrderedDict
 from datetime import datetime
 from typing import Any, Dict, Iterator, List, MutableMapping, Optional, Tuple, OrderedDict as TypingOrderedDict
-try:
-    import pyperclip
-    HAS_PYPERCLIP = True
-except ImportError:
-    HAS_PYPERCLIP = False
-
-from app.config import (
+from tostl.config import (
     ORDERS_FILE,
     TESLA_STORES,
     TODAY,
@@ -21,9 +14,9 @@ from app.config import (
     TESLA_USER_AGENT,
     TESLA_X_USER_AGENT,
 )
-from app.utils.colors import color_text, strip_color
-from app.utils.connection import request_with_retry
-from app.utils.helpers import (
+from tostl.utils.colors import color_text
+from tostl.utils.connection import request_with_retry
+from tostl.utils.helpers import (
     decode_option_codes,
     get_date_from_timestamp,
     compare_dicts,
@@ -31,23 +24,21 @@ from app.utils.helpers import (
     get_delivery_appointment_display,
     locale_format_datetime
 )
-from app.utils.history import (
+from tostl.utils.history import (
     HISTORY_TRANSLATIONS_IGNORED,
     load_history_from_file,
     save_history_to_file,
     print_history
 )
-from app.utils.locale import (
+from tostl.utils.locale import (
     t,
-    use_default_language,
     store_tesla_locale,
     LANGUAGE,
     COUNTRY,
 )
-import app.utils.history as history_module
-from app.utils.params import DETAILS_MODE, SHARE_MODE, STATUS_MODE, CACHED_MODE, ORDER_FILTER
-from app.utils.timeline import print_timeline
-from app.utils.option_codes import get_option_entry
+from tostl.utils.params import DETAILS_MODE, STATUS_MODE, CACHED_MODE, ORDER_FILTER
+from tostl.utils.timeline import print_timeline
+from tostl.utils.option_codes import get_option_entry
 
 DetailedOrder = Dict[str, Any]
 OrderMap = TypingOrderedDict[str, DetailedOrder]
@@ -117,10 +108,7 @@ def _display_selected_orders(orders: Any) -> None:
         return
     if not selected_orders:
         return
-    if SHARE_MODE:
-        display_orders_SHARE_MODE(selected_orders)
-    else:
-        display_orders(selected_orders)
+    display_orders(selected_orders)
     print_bottom_line()
 
 
@@ -314,102 +302,7 @@ def get_model_from_order(detailed_order) -> str:
 
     return model
 
-def _render_share_output(detailed_orders):
-    order_items = list(enumerate_orders(detailed_orders))
-    total_orders = len(order_items)
-    share_separator = "=" * 60
-
-    for idx, (_, order_reference, detailed_order) in enumerate(order_items, start=1):
-        order = detailed_order['order']
-        order_details = detailed_order['details']
-        tasks = order_details.get('tasks', {})
-        scheduling = tasks.get('scheduling', {})
-        status_text = order.get('orderStatus', t('unknown'))
-
-        if total_orders > 1:
-            header = f"#{idx} {t('Order Details')}:"
-        else:
-            header = f"{t('Order Details')}:"
-        print(color_text(header, '94'))
-
-
-        model = paint = interior = "unknown"
-
-        decoded_options = decode_option_codes(order.get('mktOptions', ''))
-        if decoded_options:
-            for code, description in decoded_options:
-                entry = get_option_entry(code) or {}
-                category = entry.get('category')
-                label_short = entry.get('label_short')
-                cleaned_description = description.strip()
-                display_label = label_short.strip() if isinstance(label_short, str) and label_short.strip() else cleaned_description
-
-                if category == 'paints' and display_label:
-                    paint = display_label.replace('Metallic', '').replace('Multi-Coat', '').strip()
-                elif category in {'interiors', 'interior', 'seats'} and display_label:
-                    interior = display_label
-                elif category is None and display_label:
-                    if paint == "unknown" and code.startswith(('PP', 'PN', 'PS', 'PA')):
-                        paint = display_label
-                    if interior == "unknown" and code.startswith(('IP', 'IN', 'IW', 'IX', 'IY')):
-                        interior = display_label
-
-                if category in {'models', 'model'} or ('Model' in cleaned_description and len(cleaned_description) > 10):
-                    if label_short and display_label:
-                        model = display_label
-                    else:
-                        match = re.match(r'(Model [YSX3])(?:.*?((?:AWD|RWD) (?:LR|SR|P)))?.*?$', cleaned_description)
-                        if match:
-                            model_name = match.group(1)
-                            config_suffix = match.group(2)
-                            if config_suffix:
-                                model = f"{model_name} - {config_suffix}".strip()
-                            else:
-                                model = cleaned_description.strip()
-
-        if model and paint and interior:
-            msg = f"{model} / {paint} / {interior}"
-            print(f"- {msg}")
-
-        if scheduling.get('deliveryAddressTitle'):
-            print(f"- {scheduling.get('deliveryAddressTitle')}")
-
-        print_timeline(order_reference, detailed_order)
-
-        if idx < total_orders:
-            print(f"\n{share_separator}\n")
-        else:
-            print()
-
-def generate_share_output(detailed_orders):
-    original_share_mode = history_module.SHARE_MODE
-    history_module.SHARE_MODE = True
-    output_capture = io.StringIO()
-    original_stdout = sys.stdout
-    sys.stdout = output_capture
-    try:
-        with use_default_language():
-            _render_share_output(detailed_orders)
-
-    finally:
-        sys.stdout = original_stdout
-        history_module.SHARE_MODE = original_share_mode
-
-    if HAS_PYPERCLIP:
-        # Create advertising text but don't print it
-        pyperclip.copy("```yaml\n" + strip_color(output_capture.getvalue()) + "\n```")
-
-    return output_capture.getvalue()
-
-def display_orders_SHARE_MODE(detailed_orders):
-    share_output = generate_share_output(detailed_orders)
-    print(share_output, end='')
-
-
 def display_orders(detailed_orders):
-    if HAS_PYPERCLIP:
-        generate_share_output(detailed_orders)
-
     separator = "=" * 45
     for order_number, order_reference, detailed_order in enumerate_orders(detailed_orders):
         prefix = "\n" if order_number == 0 else "\n\n"
@@ -529,12 +422,6 @@ def display_orders(detailed_orders):
 
 def print_bottom_line() -> None:
     print(f"\n{color_text(t('BOTTOM LINE HELP'), '94')}")
-    # Inform user about clipboard status
-    if HAS_PYPERCLIP:
-        print(f"\n{color_text(t('BOTTOM LINE TEXT IN CLIPBOARD'), '93')}")
-    else:
-        print(f"\n{color_text(t('BOTTOM LINE CLIPBOARD NOT WORKING'), '91')}")
-        print(f"{color_text('https://github.com/gokeeper/tesla-order-status?tab=readme-ov-file#installation', '91')}")
 
 
 # ---------------------------

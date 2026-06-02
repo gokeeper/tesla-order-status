@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
-from app.config import BASE_DIR, PRIVATE_DIR
+from tostl.config import BASE_DIR, PRIVATE_DIR
 
 
 def _load_json(path: Path) -> Any:

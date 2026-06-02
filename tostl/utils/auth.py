@@ -7,12 +7,12 @@ import urllib.parse
 import webbrowser
 import requests
 import sys
-from app.config import TOKEN_FILE
-from app.utils.colors import color_text
-from app.utils.connection import request_with_retry
-from app.utils.helpers import exit_with_status
-from app.utils.locale import t
-from app.utils.params import STATUS_MODE
+from tostl.config import TOKEN_FILE
+from tostl.utils.colors import color_text
+from tostl.utils.connection import request_with_retry
+from tostl.utils.helpers import exit_with_status
+from tostl.utils.locale import t
+from tostl.utils.params import STATUS_MODE
 
 CLIENT_ID = 'ownerapi'
 REDIRECT_URI = 'tesla://auth/callback'

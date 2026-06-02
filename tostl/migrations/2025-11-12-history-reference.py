@@ -13,7 +13,7 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-from app.config import ORDERS_FILE, HISTORY_FILE
+from tostl.config import ORDERS_FILE, HISTORY_FILE
 
 
 def _load_json(path: Path) -> Any:

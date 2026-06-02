@@ -17,7 +17,7 @@ VERSION = "p1.2.5"
 # Directory structure (new)
 # -------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
-APP_DIR = BASE_DIR / "app"
+APP_DIR = BASE_DIR / "tostl"
 DATA_DIR = BASE_DIR / "data"
 PUBLIC_DIR = DATA_DIR / "public"
 PRIVATE_DIR = DATA_DIR / "private"

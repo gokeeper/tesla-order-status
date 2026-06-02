@@ -12,7 +12,7 @@ import shutil
 from pathlib import Path
 from typing import Dict
 
-from app.config import BASE_DIR, PRIVATE_DIR, PUBLIC_DIR
+from tostl.config import BASE_DIR, PRIVATE_DIR, PUBLIC_DIR
 
 
 def _safe_move_with_backup(src: Path, dst: Path, backup_dir: Path) -> None:

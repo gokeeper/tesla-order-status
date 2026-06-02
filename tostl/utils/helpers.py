@@ -5,10 +5,10 @@ import sys
 from datetime import datetime, timezone
 from typing import Any, Dict, Iterable, Optional
 from typing import Any, Dict, Optional
-from app.utils.colors import color_text
-from app.utils.locale import t, LANGUAGE
-from app.utils.params import STATUS_MODE
-from app.config import cfg as Config
+from tostl.utils.colors import color_text
+from tostl.utils.locale import t, LANGUAGE
+from tostl.utils.params import STATUS_MODE
+from tostl.config import cfg as Config
 
 
 def exit_with_status(msg: str) -> None:
@@ -31,7 +31,7 @@ def decode_option_codes(option_string: str, prefer_short: bool = False):
         if c.strip() and c.strip().upper() not in excluded_codes
     })
 
-    from app.utils.option_codes import get_option_codes
+    from tostl.utils.option_codes import get_option_codes
     option_codes = get_option_codes()
     decoded = []
     for code in codes:

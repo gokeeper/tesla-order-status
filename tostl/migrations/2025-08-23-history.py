@@ -12,7 +12,7 @@ import re
 from pathlib import Path
 from typing import Any, List, Dict
 
-from app.config import BASE_DIR, PRIVATE_DIR
+from tostl.config import BASE_DIR, PRIVATE_DIR
 
 def _load_json(path: Path) -> Any:
     with open(path, "r", encoding="utf-8") as f:

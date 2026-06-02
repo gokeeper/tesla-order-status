@@ -2,7 +2,7 @@ import json
 import importlib.util
 import sys
 from typing import List
-from app.config import APP_DIR, PRIVATE_DIR
+from tostl.config import APP_DIR, PRIVATE_DIR
 
 # -------------------------
 # Migration runner

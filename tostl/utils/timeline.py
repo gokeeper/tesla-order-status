@@ -2,15 +2,15 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
 
-from app.utils.colors import color_text
-from app.utils.helpers import (
+from tostl.utils.colors import color_text
+from tostl.utils.helpers import (
     get_date_from_timestamp,
     normalize_str,
     get_delivery_appointment_display,
     _parse_iso_timestamp,
 )
-from app.utils.history import get_history_of_order
-from app.utils.locale import t
+from tostl.utils.history import get_history_of_order
+from tostl.utils.locale import t
 
 TIMELINE_WHITELIST = {
     'Reservation',

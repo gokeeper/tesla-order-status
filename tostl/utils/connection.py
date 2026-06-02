@@ -5,8 +5,8 @@ import time
 import requests
 from typing import Dict, Union
 
-from app.utils.helpers import exit_with_status
-from app.utils.locale import t
+from tostl.utils.helpers import exit_with_status
+from tostl.utils.locale import t
 
 def request_with_retry(url, headers=None, data=None, json=None, max_retries=3, exit_on_error=True):
     """Perform a GET or POST request with exponential backoff retries.

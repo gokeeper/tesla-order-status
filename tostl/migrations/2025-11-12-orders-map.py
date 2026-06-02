@@ -11,7 +11,7 @@ from collections import OrderedDict
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from app.config import ORDERS_FILE
+from tostl.config import ORDERS_FILE
 
 
 def _load_json(path: Path) -> Any:

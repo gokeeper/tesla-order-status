@@ -4,10 +4,12 @@
 
 [![Referral](https://img.shields.io/badge/support-via_Tesla_referral-cc0000?logo=tesla&logoColor=white)](https://ts.la/nan462780)
 
-# Tesla Order Status Tracker (TOST) 🚗📦
+# TOSTL — Tesla Order Status Tracker Lite 🚗📦
 Stay in control of your Tesla order from the moment you place it until delivery. This open-source Python tool gives you direct access to the Tesla API so you always know what is happening with your vehicle.
 
-> 🍴 **Fork notice:** This is a fork of [chrisi51/tesla-order-status](https://github.com/chrisi51/tesla-order-status) with all telemetry and third-party user-data collection removed. The only network connections made by this script are to Tesla's own API endpoints — nothing is sent anywhere else.
+> 🍴 **Fork notice:** This is a stripped-down fork of [chrisi51/tesla-order-status](https://github.com/chrisi51/tesla-order-status) — all telemetry, third-party data collection, auto-updaters, multi-language UI, and clipboard/share helpers have been removed. The only network connections made by this script are to Tesla's own API endpoints; nothing is sent anywhere else.
+>
+> 🔑 **OAuth fix credit:** The `tesla://auth/callback` redirect URI fix that restores login in June 2026 was adapted from [adriankumpf/tesla_auth#99](https://github.com/adriankumpf/tesla_auth/issues/99). See the [Authentication](#authentication) section for the new flow.
 
 ## Table of Contents
 1. [Why You'll Love It](#why-youll-love-it)
@@ -24,9 +26,8 @@ Stay in control of your Tesla order from the moment you place it until delivery.
 - 🔍 **Direct Tesla API connection**: Get the latest order information without any detours.
 - 🧾 **Display of important details**: Vehicle options, production and delivery progress.
 - 🕒 **History at a glance**: Every change (e.g. VIN allocation) is documented locally.
-- 📋 **One‑click share mode**: Anonymized clipboard for forums and social media
 - 🔁 **Multi-order ready**: Handles multiple Tesla orders at once, with `--order <reference>` to focus on a single one.
-- 🧩 **Modular & expandable**: Option codes, languages and features can be flexibly expanded.
+- 🪶 **Lite**: No telemetry, no auto-updater, no clipboard helpers, no third-party services — just orders.
 - 🔐 **Privacy-focused**: Tokens and settings remain on your device. Nothing is sent anywhere except Tesla's own API.
 
 The goal is to give users more transparency and control over the ordering process – without depending on external services.
@@ -38,12 +39,10 @@ Download the complete project to your machine. If you are unsure how, you can gr
 ## Installation
 
 1. Install [Python 3](https://www.python.org/downloads/) for your operating system.
-2. Install the required dependencies:
+2. Install the required dependency:
 ```sh
-pip install requests pyperclip
+pip install requests
 ```
-- requests: for the api calls (required)
-- pyperclip: for copying share output to the clipboard automatically (optional)
 
 ### macOS Tip
 For a clean setup, create a virtual environment before installing dependencies:
@@ -53,7 +52,7 @@ python3 -m venv .venv
 # activate it
 source .venv/bin/activate
 # install dependencies just for this project
-python3 -m pip install requests pyperclip
+python3 -m pip install requests
 ```
 
 ## Authentication
@@ -73,29 +72,26 @@ Tokens are exchanged directly with Tesla; nothing leaves your machine. With your
 ## Usage
 Run the main script to fetch and display your order details:
 ```sh
-python3 tesla_order_status.py
+python3 tostl.py
 ```
 ### Optional flags:
 Get an overview of all command-line options:
 ```sh
-python3 tesla_order_status.py --help
+python3 tostl.py --help
 ```
 #### Output Modes
 Only one of the options can be used at a time.
 - `--all` display every available key in your history (verbose output)
 - `--details` show additional information such as financing details.
-- `--share` hide personal data like order ID and VIN for sharing. limits output to dates and status changes.
 - `--status` only report whether the order information has changed since the last run. no login happens, so tesla_tokens.json have to be present already. token will get refreshed if necessary.
   - 0 => no changes
   - 1 => changes detected
   - 2 => pending updates
   - -1 => error ... you better run the script once without any params to make sure, it is working. Possibly the api token is invalid or there is no tesla_orders.json already
-    
-> 💡 Whenever `pyperclip` is installed, a share-friendly summary is copied to your clipboard. `--share` is not needed anymore for that.
 
 #### Work Modes
 Work modes can be combined with any output mode:
-- `--cached` – reuse locally cached order data without calling the API (perfect with `--share`)
+- `--cached` – reuse locally cached order data without calling the API
 - Automatic caching activates when you run the script again within one minute of a successful API request, keeping Tesla happy with fewer calls.
 
 #### Order Filters
@@ -104,8 +100,6 @@ Work modes can be combined with any output mode:
 ## Configuration
 ### General Settings
 The script stores the configuration in `data/private/settings.json`. Feel free to tweak it—if something breaks, the script falls back to default values.
-
-On the first run the script detects your system language and stores it as `language` in the settings file. Edit this entry to override the language manually. If no translation is available yet, the setting is simply ignored until one becomes available.
 
 ### Option Codes
 Known Tesla option codes are bundled with the repository in `data/public/option-codes/codes.json` (snapshot taken from the upstream codebase). You can drop additional JSON files into `data/public/option-codes/` to extend or override entries; later files win if the same code is defined more than once.
@@ -171,20 +165,6 @@ Change History:
 2025-08-19: ≠ 0.details.tasks.deliveryDetails.regData.orderDetails.vin: None -> 131232
 2025-08-19: + 0.details.tasks.deliveryDetails.regData.orderDetails.userId: 10000000
 2025-08-19: - 0.details.tasks.deliveryDetails.regData.orderDetails.ritzbitz
-```
-
-#### SHARED MODE example:
-```
----
-Order Details:
-- Model Y - AWD LR / Deep Blue / White
-- Tesla Delivery & Used Car Center Hanau Holzpark
-
-Order Timeline:
-- 2025-08-07: Reservation
-- 2025-08-07: Order Booked
-- 2025-08-07: Delivery Window: 6 September - 30 September
-- 2025-08-23: new Delivery Window: 10 September - 30 September
 ```
 
 ## Issues

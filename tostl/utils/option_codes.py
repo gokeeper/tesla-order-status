@@ -7,7 +7,7 @@ from glob import glob
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from app.config import PUBLIC_DIR
+from tostl.config import PUBLIC_DIR
 
 _OPTION_CODES: Optional[Dict[str, Dict[str, Any]]] = None
 
