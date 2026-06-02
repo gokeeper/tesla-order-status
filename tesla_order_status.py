@@ -21,12 +21,8 @@ def main() -> None:
 
     """Import and run the application modules."""
     from app.utils.auth import main as run_tesla_auth
-    from app.utils.banner import display_banner
     from app.utils.orders import main as run_orders
-    from app.utils.params import STATUS_MODE
 
-    if not STATUS_MODE:
-        display_banner()
     access_token = run_tesla_auth()
     run_orders(access_token)
 

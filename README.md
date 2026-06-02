@@ -1,8 +1,8 @@
 [![Active](https://img.shields.io/badge/status-actively_maintained-darkgreen)](#)  [![Python](https://img.shields.io/badge/python-3.x-blue?logo=python)](#)  [![Platform](https://img.shields.io/badge/platform-cross--platform-lightgrey)](#) [![Privacy](https://img.shields.io/badge/privacy-100%25_local-darkgreen)](#)
 
-[![Stars](https://img.shields.io/github/stars/chrisi51/tesla-order-status?style=social)](https://github.com/chrisi51/tesla-order-status/stargazers) [![Forks](https://img.shields.io/github/forks/chrisi51/tesla-order-status?style=social)](https://github.com/chrisi51/tesla-order-status/network/members) [![Issues](https://img.shields.io/github/issues/chrisi51/tesla-order-status?style=social)](https://github.com/chrisi51/tesla-order-status/issues)
+[![Stars](https://img.shields.io/github/stars/gokeeper/tesla-order-status?style=social)](https://github.com/gokeeper/tesla-order-status/stargazers) [![Forks](https://img.shields.io/github/forks/gokeeper/tesla-order-status?style=social)](https://github.com/gokeeper/tesla-order-status/network/members) [![Issues](https://img.shields.io/github/issues/gokeeper/tesla-order-status?style=social)](https://github.com/gokeeper/tesla-order-status/issues)
 
-[![Chat](https://img.shields.io/badge/chat-Community-blue?logo=wechat)](https://chat.tesla-order-status-tracker.de) [![Coffee](https://img.shields.io/badge/buy_me-a_coffee-cc0000?logo=buymeacoffee&logoColor=white)](https://www.paypal.com/paypalme/chrisi51) [![Referral](https://img.shields.io/badge/support-via_Tesla_referral-cc0000?logo=tesla&logoColor=white)](https://ts.la/christian906959)
+[![Referral](https://img.shields.io/badge/support-via_Tesla_referral-cc0000?logo=tesla&logoColor=white)](https://ts.la/nan462780)
 
 # Tesla Order Status Tracker (TOST) 🚗📦
 Stay in control of your Tesla order from the moment you place it until delivery. This open-source Python tool gives you direct access to the Tesla API so you always know what is happening with your vehicle.
@@ -32,7 +32,7 @@ Stay in control of your Tesla order from the moment you place it until delivery.
 The goal is to give users more transparency and control over the ordering process – without depending on external services.
 
 ## Get Started
-Download the complete project to your machine. If you are unsure how, you can grab the ZIP archive directly from GitHub: https://github.com/chrisi51/tesla-order-status/archive/refs/heads/main.zip
+Download the complete project to your machine. If you are unsure how, you can grab the ZIP archive directly from GitHub: https://github.com/gokeeper/tesla-order-status/archive/refs/heads/main.zip
 > ⚠️ Do not run single scripts without the rest of the repository. Everything is meant to work together.
 
 ## Installation
@@ -108,12 +108,7 @@ The script stores the configuration in `data/private/settings.json`. Feel free t
 On the first run the script detects your system language and stores it as `language` in the settings file. Edit this entry to override the language manually. If no translation is available yet, the setting is simply ignored until one becomes available.
 
 ### Option Codes
-Known Tesla option codes are now downloaded on demand from
-`https://www.tesla-order-status-tracker.de/scripts/php/fetch/option_codes.php` and
-cached locally for 24 hours. The cache lives in `data/private/option_codes_cache.json`
-and is refreshed automatically whenever it expires. You can still drop custom JSON
-files into `data/public/option-codes` to override or extend the remote data; local
-entries win if both define the same option code.
+Known Tesla option codes are bundled with the repository in `data/public/option-codes/codes.json` (snapshot taken from the upstream codebase). You can drop additional JSON files into `data/public/option-codes/` to extend or override entries; later files win if the same code is defined more than once.
 
 ## History & Preview
 The script stores the latest order information in `tesla_orders.json` and keeps a change log in `tesla_order_history.json`. Every detected difference—like a VIN assignment—is appended to the history file and displayed after the current status. The "Order Information" section always shows live data first, followed by historical changes.
