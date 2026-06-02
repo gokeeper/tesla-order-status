@@ -15,7 +15,7 @@ from app.utils.locale import t
 from app.utils.params import STATUS_MODE
 
 CLIENT_ID = 'ownerapi'
-REDIRECT_URI = 'https://auth.tesla.com/void/callback'
+REDIRECT_URI = 'tesla://auth/callback'
 AUTH_URL = 'https://auth.tesla.com/oauth2/v3/authorize'
 TOKEN_URL = 'https://auth.tesla.com/oauth2/v3/token'
 SCOPE = 'openid email offline_access'
@@ -44,13 +44,13 @@ def _get_auth_code(code_challenge: str):
     auth_url = f"{AUTH_URL}?{urllib.parse.urlencode(auth_params)}"
     print(color_text(t("To retrieve your order status, you need to authenticate with your Tesla account."), '93'))
     message_parts = [
-        color_text(t("A browser window will open with the Tesla login page. After logging in you will likely see a"), 93),
-        color_text(t('\"Page Not Found\"'), 91),
-        color_text(t("page."), 93),
+        color_text(t("A browser window will open with the Tesla login page. After logging in your browser will try to open a"), 93),
+        color_text(t("tesla://auth/callback?..."), 91),
+        color_text(t("URL and either prompt to open the Tesla app, show an error, or stay on a blank page."), 93),
         color_text(t("That is CORRECT!"), 91),
     ]
     print(" ".join(message_parts))
-    print(color_text(t("Copy the full URL of that page and return here. The authentication happens only between you and Tesla; no data leaves your system."), '93'))
+    print(color_text(t("Do NOT open the Tesla app. Copy the full tesla://auth/callback?... URL from the browser's address bar (or DevTools \u2192 Network) and return here. The authentication happens only between you and Tesla; no data leaves your system."), '93'))
     if input(color_text(t("Proceed to open the login page? (y/n): "), '93')).lower() != 'y':
         print(color_text(t("Authentication cancelled."), '91'))
         sys.exit(0)

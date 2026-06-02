@@ -18,12 +18,13 @@ Behalte deine Tesla-Bestellung von der Auftragsbestätigung bis zur Auslieferung
 1. [Warum du es lieben wirst](#warum-du-es-lieben-wirst)
 2. [Schnellstart](#schnellstart)
 3. [Installation](#installation)
-4. [Benutzung](#benutzung)
-5. [Konfiguration](#konfiguration)
-6. [Historie & Vorschau](#historie--vorschau)
-7. [Telemetry](#telemetry)
-8. [Hinweise](#hinweise)
-9. [Support & Kontakt](#support--kontakt)
+4. [Authentifizierung](#authentifizierung)
+5. [Benutzung](#benutzung)
+6. [Konfiguration](#konfiguration)
+7. [Historie & Vorschau](#historie--vorschau)
+8. [Telemetry](#telemetry)
+9. [Hinweise](#hinweise)
+10. [Support & Kontakt](#support--kontakt)
 
 ## Warum du es lieben wirst
 
@@ -75,6 +76,21 @@ source .venv/bin/activate
 # Abhängigkeiten nur für dieses Projekt installieren
 python3 -m pip install requests pyperclip
 ```
+
+## Authentifizierung
+
+Beim ersten Start öffnet das Skript die Tesla‑Login‑Seite im Browser. Nach erfolgreichem Login (inkl. 2FA) leitet Tesla auf das Custom‑URL‑Schema `tesla://auth/callback?code=...` weiter. Da dies keine reguläre `https://`‑URL ist, zeigt der Browser keine Seite an – stattdessen erscheint ggf. eine Aufforderung, die Tesla‑App zu öffnen, eine „Link kann nicht geöffnet werden"‑Meldung oder einfach eine leere/unveränderte Seite. **Das ist so gewollt.**
+
+So findest du die URL mit dem Authorization Code:
+
+1. **Bevor** du das Login abschickst, öffne die Entwicklertools des Browsers (**F12**) und wechsle in den **Network**‑Tab. Aktiviere **Preserve log**, damit Einträge nach dem Redirect erhalten bleiben.
+2. Schließe den Tesla‑Login ab (E‑Mail → Passwort → 2FA).
+3. Suche im Network‑Tab den letzten Request an `auth.tesla.com/...` mit Status **302**. Öffne die **Headers** und kopiere den Wert des **Location**‑Response‑Headers – er sieht so aus: `tesla://auth/callback?code=...&state=...`.
+4. Füge diese URL beim Prompt des Skripts ein.
+
+Die Token werden direkt mit Tesla ausgetauscht; es verlässt nichts deinen Rechner. Mit deiner Zustimmung wird `tesla_tokens.json` lokal für künftige Läufe gespeichert.
+
+> ℹ️ Tesla hat 2026 die bisherige Redirect‑URI `https://auth.tesla.com/void/callback` abgeschaltet, deshalb wird jetzt das `tesla://`‑Schema verwendet. Falls du eine ältere Version benutzt hast und die Meldung `The 'redirect_uri' supplied is not registered for this 'client_id'` bekommen hast, aktualisiere auf die neueste Version.
 
 ## Benutzung
 

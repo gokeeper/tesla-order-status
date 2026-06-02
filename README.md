@@ -15,12 +15,13 @@ Stay in control of your Tesla order from the moment you place it until delivery.
 1. [Why You'll Love It](#why-youll-love-it)
 2. [Get Started](#get-started)
 3. [Installation](#installation)
-4. [Usage](#usage)
-5. [Configuration](#configuration)
-6. [History & Preview](#history--preview)
-7. [Telemetry](#telemetry)
-8. [Disclaimer](#disclaimer)
-9. [Support & Contact](#support--contact)
+4. [Authentication](#authentication)
+5. [Usage](#usage)
+6. [Configuration](#configuration)
+7. [History & Preview](#history--preview)
+8. [Telemetry](#telemetry)
+9. [Disclaimer](#disclaimer)
+10. [Support & Contact](#support--contact)
 
 ## Why You'll Love It
 - 🔍 **Direct Tesla API connection**: Get the latest order information without any detours.
@@ -64,6 +65,20 @@ source .venv/bin/activate
 # install dependencies just for this project
 python3 -m pip install requests pyperclip
 ```
+
+## Authentication
+On first run the script opens Tesla's login page in your browser. After you complete login (and 2FA), Tesla redirects to the custom URL scheme `tesla://auth/callback?code=...`. Because this is not a regular `https://` URL, the browser will not display it as a page — it may prompt to open the Tesla app, show "can't open link", or just stay on a blank/previous page. **That is expected.**
+
+To capture the URL with the authorization code:
+
+1. Before submitting the login form, open your browser's Developer Tools (**F12**) and switch to the **Network** tab. Enable **Preserve log** so entries survive the redirect.
+2. Complete the Tesla login (email → password → 2FA).
+3. In the Network tab, find the last request to `auth.tesla.com/...` that responds with **302**. Open its **Headers** and copy the value of the **Location** response header — it will look like `tesla://auth/callback?code=...&state=...`.
+4. Paste that URL into the script when prompted.
+
+Tokens are exchanged directly with Tesla; nothing leaves your machine. With your permission the resulting `tesla_tokens.json` is saved locally for future runs.
+
+> ℹ️ Tesla disabled the previous `https://auth.tesla.com/void/callback` redirect URI in 2026, which is why the flow now uses the custom `tesla://` scheme. If you used an older version of this script and hit `The 'redirect_uri' supplied is not registered for this 'client_id'`, update to the latest version.
 
 ## Usage
 Run the main script to fetch and display your order details:
