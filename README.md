@@ -6,7 +6,8 @@
 
 # Tesla Order Status Tracker (TOST) 🚗📦
 Stay in control of your Tesla order from the moment you place it until delivery. This open-source Python tool gives you direct access to the Tesla API so you always know what is happening with your vehicle.
-> 🖥️ Prefer a GUI? check my TOST app: https://www.tesla-order-status-tracker.de
+
+> 🍴 **Fork notice:** This is a fork of [chrisi51/tesla-order-status](https://github.com/chrisi51/tesla-order-status) with all telemetry and third-party user-data collection removed. The only network connections made by this script are to Tesla's own API endpoints — nothing is sent anywhere else.
 
 ## Table of Contents
 1. [Why You'll Love It](#why-youll-love-it)
@@ -29,13 +30,6 @@ Stay in control of your Tesla order from the moment you place it until delivery.
 - 🔐 **Privacy-focused**: Tokens and settings remain on your device. Nothing is sent anywhere except Tesla's own API.
 
 The goal is to give users more transparency and control over the ordering process – without depending on external services.
-
-## 🚀 Quick Links
-- 💬 Community & Support-Chat: https://chat.tesla-order-status-tracker.de
-- ☕ Support via PayPal: https://www.paypal.com/paypalme/chrisi51
-- 🚗 Order a Tesla and support me: https://ts.la/christian906959
-- 📦 Direct download as ZIP: https://github.com/chrisi51/tesla-order-status/archive/refs/heads/main.zip
-- 🖥️ GUI version: https://www.tesla-order-status-tracker.de
 
 ## Get Started
 Download the complete project to your machine. If you are unsure how, you can grab the ZIP archive directly from GitHub: https://github.com/chrisi51/tesla-order-status/archive/refs/heads/main.zip
@@ -199,7 +193,7 @@ Order Timeline:
 ```
 
 ## Issues
-If you have any issues, running the script or getting error messages, pleas feel free to ask for help in the [issues](https://github.com/chrisi51/tesla-order-status/issues) section or pm me at the [tff-forum](https://tff-forum.de/u/chrisi51/summary)
+If you have any issues, running the script or getting error messages, please feel free to ask for help in the [issues](https://github.com/gokeeper/tesla-order-status/issues) section.
 
 
 ## Disclaimer
@@ -210,10 +204,4 @@ If you have any issues, running the script or getting error messages, pleas feel
 - With your permission the script stores the token on your hard disk.
 
 ## Support & Contact
-If you want to support the project, you can use my link on your next Tesla order: https://ts.la/christian906959
-
-Or just buy me a coffee: https://www.paypal.com/paypalme/chrisi51
-
-As this is a fork I have to say thanks to https://github.com/niklaswa/tesla-order-status for the initial script.
-
-Come say hi in the community chat: https://chat.tesla-order-status-tracker.de
+If you want to support the project, you can use my link on your next Tesla order: https://ts.la/nan462780
