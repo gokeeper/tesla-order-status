@@ -1,11 +1,8 @@
-[![Active](https://img.shields.io/badge/status-actively_maintained-darkgreen)](#)  [![Python](https://img.shields.io/badge/python-3.x-blue?logo=python)](#)  [![Platform](https://img.shields.io/badge/platform-cross--platform-lightgrey)](#) [![Telemetry](https://img.shields.io/badge/telemetry-opt--in-darkgreen)](#) [![Privacy](https://img.shields.io/badge/privacy-100%25_local-darkgreen)](#)
+[![Active](https://img.shields.io/badge/status-actively_maintained-darkgreen)](#)  [![Python](https://img.shields.io/badge/python-3.x-blue?logo=python)](#)  [![Platform](https://img.shields.io/badge/platform-cross--platform-lightgrey)](#) [![Privacy](https://img.shields.io/badge/privacy-100%25_local-darkgreen)](#)
 
 [![Stars](https://img.shields.io/github/stars/chrisi51/tesla-order-status?style=social)](https://github.com/chrisi51/tesla-order-status/stargazers) [![Forks](https://img.shields.io/github/forks/chrisi51/tesla-order-status?style=social)](https://github.com/chrisi51/tesla-order-status/network/members) [![Issues](https://img.shields.io/github/issues/chrisi51/tesla-order-status?style=social)](https://github.com/chrisi51/tesla-order-status/issues)
 
 [![Chat](https://img.shields.io/badge/chat-Community-blue?logo=wechat)](https://chat.tesla-order-status-tracker.de) [![Coffee](https://img.shields.io/badge/buy_me-a_coffee-cc0000?logo=buymeacoffee&logoColor=white)](https://www.paypal.com/paypalme/chrisi51) [![Referral](https://img.shields.io/badge/support-via_Tesla_referral-cc0000?logo=tesla&logoColor=white)](https://ts.la/christian906959)
-
-> Prefer reading in German?<br>
-> [Hier geht’s zur deutschen Version des README](README_DE.md)
 
 # Tesla Order Status Tracker (TOST) 🚗📦
 Stay in control of your Tesla order from the moment you place it until delivery. This open-source Python tool gives you direct access to the Tesla API so you always know what is happening with your vehicle.
@@ -19,9 +16,8 @@ Stay in control of your Tesla order from the moment you place it until delivery.
 5. [Usage](#usage)
 6. [Configuration](#configuration)
 7. [History & Preview](#history--preview)
-8. [Telemetry](#telemetry)
-9. [Disclaimer](#disclaimer)
-10. [Support & Contact](#support--contact)
+8. [Disclaimer](#disclaimer)
+9. [Support & Contact](#support--contact)
 
 ## Why You'll Love It
 - 🔍 **Direct Tesla API connection**: Get the latest order information without any detours.
@@ -30,7 +26,7 @@ Stay in control of your Tesla order from the moment you place it until delivery.
 - 📋 **One‑click share mode**: Anonymized clipboard for forums and social media
 - 🔁 **Multi-order ready**: Handles multiple Tesla orders at once, with `--order <reference>` to focus on a single one.
 - 🧩 **Modular & expandable**: Option codes, languages and features can be flexibly expanded.
-- 🔐 **Privacy-focused**: Tokens and settings remain on your device – telemetry is completely optional.
+- 🔐 **Privacy-focused**: Tokens and settings remain on your device. Nothing is sent anywhere except Tesla's own API.
 
 The goal is to give users more transparency and control over the ordering process – without depending on external services.
 
@@ -202,34 +198,13 @@ Order Timeline:
 - 2025-08-23: new Delivery Window: 10 September - 30 September
 ```
 
-## Telemetry
-To better understand how the tool is used and to improve future development, the script can optionally send **anonymous usage statistics**.
-On the very first launch you will be asked for consent. If you decline, nothing is sent. Declining has no negative impact other than not contributing to usage statistics.
-
-### What information is sent?
-
-- A randomly generated fingerprint that identifies your installation (not tied to your identity)
-- For each tracked order: a pseudonymized order reference number and the associated Tesla model
-- Which command line flags were used (e.g. `--details`, `--share`, `--status`, `--cached`)
-- The operating system language (e.g. `en_US`)
-
-### How is your data protected?
-- **No personal data** such as VINs, names, email addresses, tokens, credentials or raw order IDs ever leave your machine.
-- Order IDs are **irreversibly pseudonymized** locally using a secret-based HMAC before transmission. Even if someone had access to the data, it cannot be reversed into the original ID.
-- The installation fingerprint is just a random string generated once on your system. It contains no information about your device or account.
-- All traffic is sent over encrypted HTTPS.
-- Data is used exclusively in aggregate to understand general usage patterns, not to track individual users.
-
-### Controlling telemetry
-You are always in control: telemetry is opt-in. Consent is requested on first run, and you can disable or revoke it at any time by editing the configuration file (`data/private/settings.json`) and setting `"telemetry-consent": false`.
-
 ## Issues
 If you have any issues, running the script or getting error messages, pleas feel free to ask for help in the [issues](https://github.com/chrisi51/tesla-order-status/issues) section or pm me at the [tff-forum](https://tff-forum.de/u/chrisi51/summary)
 
 
 ## Disclaimer
 - The script runs locally on your machine.
-- No connection to me is made at any time unless you explicitly allow telemetry as described above.
+- The only network connections are to Tesla's own API endpoints for authentication and order data.
 - You need to log in via browser and return the resulting URL to the script to extract the login token used for the API.
 - The script only uses the token to work with for the current session.
 - With your permission the script stores the token on your hard disk.

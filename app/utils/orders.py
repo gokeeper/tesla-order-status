@@ -46,7 +46,6 @@ from app.utils.locale import (
 )
 import app.utils.history as history_module
 from app.utils.params import DETAILS_MODE, SHARE_MODE, STATUS_MODE, CACHED_MODE, ORDER_FILTER
-from app.utils.telemetry import track_usage
 from app.utils.timeline import print_timeline
 from app.utils.option_codes import get_option_entry
 
@@ -147,7 +146,7 @@ def _ensure_order_map(raw_orders: Any) -> OrderMap:
 
 
 def _orders_map_to_list(orders: Any) -> List[DetailedOrder]:
-    """Convert an order collection back to a list (for legacy persistence/telemetry)."""
+    """Convert an order collection back to a list (for legacy persistence)."""
     if isinstance(orders, list):
         return orders
     if isinstance(orders, MutableMapping):
@@ -545,7 +544,6 @@ def print_bottom_line() -> None:
 # ---------------------------
 def main(access_token) -> None:
     old_orders = _load_orders_from_file()
-    track_usage(_orders_map_to_list(old_orders))
 
     if CACHED_MODE:
         if not STATUS_MODE:

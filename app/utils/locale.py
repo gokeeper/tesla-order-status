@@ -73,7 +73,6 @@ def t(text: str) -> str:
 WINDOWS_LANG_MAP = {
     # seen in the wild
     "english": "en",
-    "german": "de",
     "finnish": "fi",
     "greek": "el",
     "polish": "pl",
@@ -88,7 +87,6 @@ WINDOWS_LANG_MAP = {
 
 WINDOWS_REGION_MAP = {
     # seen in the wild
-    "germany": "DE",
     "austria": "AT",
     "switzerland": "CH",
     "sweden": "SE",
@@ -158,7 +156,7 @@ def _try_locale_normalize(tag: str) -> Optional[str]:
 
 
 def _try_windows_mapping(tag: str) -> Optional[str]:
-    # Accept forms like 'English_United States', 'English_Germany', 'German_Austria'
+    # Accept forms like 'English_United States', 'English_United Kingdom', 'Polish_Poland'
     # Also be forgiving with spaces/dashes/parentheses
     s = tag.strip()
     # Replace dash with underscore to unify splitting
@@ -207,7 +205,7 @@ def normalize_locale(code: str) -> Optional[str]:
     Handles:
       - Already-normalized tags like 'de_DE' or 'de_DE.UTF-8'
       - Dash vs underscore variants 'en-US'
-      - Windows names like 'English_United States', 'German_Austria', 'English_Germany'
+      - Windows names like 'English_United States', 'English_United Kingdom', 'Polish_Poland'
     Returns None if unrecognized.
     """
     if not code:

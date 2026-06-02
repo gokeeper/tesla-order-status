@@ -1,6 +1,4 @@
 import base64
-import hmac
-import hashlib
 import json
 import os
 import sys
@@ -163,16 +161,6 @@ def generate_token(bytes_len: int, token_length: Optional[int] = None) -> str:
         min_bytes = (token_length * 5 + 7) // 8  # ceil division
         bytes_len = max(bytes_len, min_bytes)
     return _b32(os.urandom(bytes_len), token_length)
-
-def pseudonymize_data(data: str, length: int) -> str:
-    secret_b32 = Config.get("secret")
-    if not secret_b32:
-        secret_b32 = generate_token(32)
-        Config.set("secret", secret_b32)
-    secret = _b32decode_nopad(secret_b32)
-    digest = hmac.new(secret, data.encode("utf-8"), hashlib.sha256).digest()
-    return _b32(digest, length)
-
 
 def _parse_iso_timestamp(value: str) -> Optional[datetime]:
     if value is None:
