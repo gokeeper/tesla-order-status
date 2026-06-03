@@ -13,14 +13,13 @@ Stay in control of your Tesla order from the moment you place it until delivery.
 
 ## Table of Contents
 1. [Why You'll Love It](#why-youll-love-it)
-2. [Get Started](#get-started)
-3. [Installation](#installation)
-4. [Authentication](#authentication)
-5. [Usage](#usage)
-6. [Configuration](#configuration)
-7. [History & Preview](#history--preview)
-8. [Disclaimer](#disclaimer)
-9. [Support & Contact](#support--contact)
+2. [Installation](#installation)
+3. [Authentication](#authentication)
+4. [Usage](#usage)
+5. [Configuration](#configuration)
+6. [History & Preview](#history--preview)
+7. [Disclaimer](#disclaimer)
+8. [Support & Contact](#support--contact)
 
 ## Why You'll Love It
 - 🔍 **Direct Tesla API connection**: Get the latest order information without any detours.
@@ -32,27 +31,13 @@ Stay in control of your Tesla order from the moment you place it until delivery.
 
 The goal is to give users more transparency and control over the ordering process – without depending on external services.
 
-## Get Started
-Download the complete project to your machine. If you are unsure how, you can grab the ZIP archive directly from GitHub: https://github.com/gokeeper/tesla-order-status/archive/refs/heads/main.zip
-> ⚠️ Do not run single scripts without the rest of the repository. Everything is meant to work together.
-
 ## Installation
+Requires [Python 3](https://www.python.org/downloads/).
 
-1. Install [Python 3](https://www.python.org/downloads/) for your operating system.
-2. Install the required dependency:
 ```sh
-pip install requests
-```
-
-### macOS Tip
-For a clean setup, create a virtual environment before installing dependencies:
-```sh
-# create the environment
-python3 -m venv .venv
-# activate it
-source .venv/bin/activate
-# install dependencies just for this project
-python3 -m pip install requests
+git clone https://github.com/gokeeper/tesla-order-status.git
+cd tesla-order-status
+pip install -r requirements.txt
 ```
 
 ## Authentication
